@@ -74,18 +74,28 @@ st.set_page_config(page_title="Orçamento SIGFI", layout="centered")
 
 st.title("Calculadora de Orçamento SIGFI")
 
+# Tipo
 tipo = st.radio(
     "Tipo de solicitação",
     ["Ligação Nova", "Alteração de carga"]
 )
 
-sigfi_atual = st.number_input("SIGFI atual", min_value=0, step=1)
-sigfi_pedido = st.number_input("SIGFI pedido", min_value=0, step=1)
+# SIGFI com lista (corrigido)
+sigfi_atual = st.selectbox(
+    "SIGFI atual",
+    [30, 80, 120, 180]
+)
 
+sigfi_pedido = st.selectbox(
+    "SIGFI pedido",
+    [80, 120, 180]
+)
+
+# Botão
 if st.button("Calcular"):
 
     status, mo_ret, mo_inst, material, total = calcular_orcamento(
-        tipo, int(sigfi_atual), int(sigfi_pedido)
+        tipo, sigfi_atual, sigfi_pedido
     )
 
     st.subheader("Resultado")
