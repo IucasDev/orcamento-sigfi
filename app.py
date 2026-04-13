@@ -1,6 +1,14 @@
 import streamlit as st
 
 # ==============================================
+# FUNÇÃO DE FORMATAÇÃO (BR)
+# ==============================================
+
+def formatar_moeda(valor):
+    return f"R$ {valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+
+# ==============================================
 # FUNÇÕES DE CUSTO
 # ==============================================
 
@@ -74,13 +82,11 @@ st.set_page_config(page_title="Orçamento SIGFI", layout="centered")
 
 st.title("Calculadora de Orçamento SIGFI")
 
-# Tipo
 tipo = st.radio(
     "Tipo de solicitação",
     ["Ligação Nova", "Alteração de carga"]
 )
 
-# SIGFI com lista (corrigido)
 sigfi_atual = st.selectbox(
     "SIGFI atual",
     [30, 80, 120, 180]
@@ -91,7 +97,6 @@ sigfi_pedido = st.selectbox(
     [80, 120, 180]
 )
 
-# Botão
 if st.button("Calcular"):
 
     status, mo_ret, mo_inst, material, total = calcular_orcamento(
@@ -106,9 +111,9 @@ if st.button("Calcular"):
         st.write("Status:", status)
 
         if total is not None:
-            st.write(f"Mão de obra retirada: R$ {mo_ret:.2f}")
-            st.write(f"Mão de obra instalação: R$ {mo_inst:.2f}")
-            st.write(f"Material: R$ {material:.2f}")
-            st.success(f"TOTAL: R$ {total:.2f}")
+            st.write(f"Mão de obra retirada: {formatar_moeda(mo_ret)}")
+            st.write(f"Mão de obra instalação: {formatar_moeda(mo_inst)}")
+            st.write(f"Material: {formatar_moeda(material)}")
+            st.success(f"TOTAL: {formatar_moeda(total)}")
         else:
             st.info("Sem custo ao cliente.")
