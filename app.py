@@ -43,7 +43,7 @@ def material_instalacao(cat):
 
 BASE_SIGFI = {
     30: "PU",
-    80: "PC",
+    80: "PU",
     120: "PC",
     180: "PC"
 }
